@@ -8,6 +8,10 @@ matrix<datatype> name(std::vector<std::vector<datatype>>)
 ```
 Example:
 ```
-matrix<int> test()
+matrix<int> test({
+{1,2,3},
+{4,5,6},
+{7,8,9}
+})
 ```
 
