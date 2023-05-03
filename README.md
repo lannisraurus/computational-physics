@@ -69,3 +69,53 @@ std::cout << A.determinant();
 OUTPUT:
 1
 ```
+Dot product (nx1):
+```
+matrix<int> A({{1},{1},{2}});
+matrix<int> B({{0},{3},{1}});
+std::cout << A%B;
+```
+
+```
+OUTPUT:
+5
+```
+Cross Product (3x1):
+```
+matrix<int> A({{1},{0},{0}});
+matrix<int> B({{0},{1},{0}});
+matrix<int> C = A^B;
+C.representation();
+```
+
+```
+OUTPUT:
+[ 0 ]
+[ 0 ]
+[ 1 ]
+
+```
+Size:
+```
+float num = 1/sqrt(3);
+matrix<float> A({{num},{num},{num}});
+std::cout << A.size();
+```
+
+```
+OUTPUT:
+1
+```
+Normalize Vector:
+```
+matrix<float> A({{1},{1},{1}});
+A.normalizeVector();
+A.representation();
+```
+
+```
+OUTPUT:
+[ 0,577.. ]
+[ 0,577.. ]
+[ 0,577.. ]
+```
