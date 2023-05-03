@@ -198,9 +198,42 @@ public:
 
     };
     //get entry
-    type getEntry();
+    type getEntry(int i, int j){return data[i][j];}
     //Adjoint Matrix
-    matrix adjoint();
+    matrix cofactorMatrix(){
+        //exceptions
+        squareError();
+        //intermidiate variables
+        std::vector<std::vector<type>> result;
+        int incrementX; int incrementY;
+        int multiplier;
+        std::vector<std::vector<type>> subMatrix;
+        std::vector<type> defaultVector;
+        //cleaning matrices
+        for (int i=0; i<numRows-1; i++) defaultVector.push_back((type)0);
+        for (int j=0; j<numRows-1; j++) subMatrix.push_back(defaultVector);
+        defaultVector.push_back((type)0);
+        for (int j=0; j<numRows; j++) result.push_back(defaultVector);
+        //calculate cofactor matrix
+        for(int i=0;i<numRows;i++){
+            incrementX = 0;
+            for(int j=0;j<numRows;j++){
+                incrementY = 0;
+                for(int x=0;x<numRows-1;x++){
+                    if (x==i) {incrementX=1;}
+                    for(int y=0;y<numRows-1;y++){
+                        if (y==j) {incrementY=1;}
+                        subMatrix[y][x] = data[y+incrementY][x+incrementX];
+                    }
+                }
+                matrix<type> temp(subMatrix);
+                temp.representation();
+                if ((i+j)%2==0){multiplier=1;}else{multiplier=-1;}
+                result[i][j] = multiplier*temp.determinant();
+            }
+        }
+        return matrix(result);
+    }
     //Transpose operator
     matrix transpose();
     //Inverse matrix
