@@ -44,3 +44,18 @@ A.representation();
 OUTPUT:
 [ 2 4 12 ]
 ```
+
+Matrix Multiplication:
+```
+matrix<int> A({{1,2,6}});
+matrix<int> B({{5},{3},{1}});
+C=A*B;
+C.representation();
+```
+
+```
+OUTPUT:
+[ 5 10 30 ]
+[ 3 6 18 ]
+[ 1 2 6 ]
+```
