@@ -32,3 +32,15 @@ OUTPUT:
 [ 2 4 6 ]
 [ 6 4 2 ]
 ```
+
+Scalar Multiplication:
+```
+matrix<int> A({{1,2,6}});
+A=A*2;
+A.representation();
+```
+
+```
+OUTPUT:
+[ 2 4 12 ]
+```
