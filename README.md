@@ -6,15 +6,8 @@ Create matrix:
 ```
 matrix<datatype> name(std::vector<std::vector<datatype>>);
 ```
-Example:
-```
-matrix<int> test({
-{1,2,3},
-{4,5,6},
-{7,8,9}
-});
-```
-Representation function - cout's the matrix into the console:
+
+Representation function - prints the matrix into the console:
 
 ```
 matrix<int> A({{1,2,3},{3,2,1}});
@@ -31,4 +24,11 @@ Addition operation - adds matrices of the same size, entry by entry:
 ```
 matrix<int> A({{1,2,3},{3,2,1}});
 matrix<int> B = A+A;
+B.representation();
+```
+
+```
+OUTPUT:
+[ 2 4 6 ]
+[ 6 4 2 ]
 ```
