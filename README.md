@@ -14,6 +14,16 @@ matrix<int> test({
 {7,8,9}
 });
 ```
+Representation function - cout's the matrix into the console:
+```
+matrix<int> A({{1,2,3},{3,2,1}});
+A.representation();
+```
+```
+OUTPUT:
+[ 1 2 3 ]
+[ 3 2 1 ]
+```
 Addition operation - adds matrices of the same size, entry by entry:
 ```
 matrix<int> A({{1,2,3},{3,2,1}});
