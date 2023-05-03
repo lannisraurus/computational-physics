@@ -7,4 +7,7 @@ Create matrix:
 matrix<datatype> name(std::vector<std::vector<datatype>>)
 ```
 Example:
-```matrix<int> test()```
+```
+matrix<int> test()
+```
+
