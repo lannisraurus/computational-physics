@@ -59,3 +59,13 @@ OUTPUT:
 [ 3 6 18 ]
 [ 1 2 6 ]
 ```
+Determinant:
+```
+matrix<int> A({{1,2},{1,3}});
+std::cout << A.determinant();
+```
+
+```
+OUTPUT:
+1
+```
