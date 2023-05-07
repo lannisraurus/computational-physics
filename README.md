@@ -1,5 +1,4 @@
-# Computational Physics
-Some tools.
+
 # Matrix.h
 Features to fix - Cofactor matrix isn't working well; generalize sub matrix operation and empty matrix operation; allow for automatic matrix generation (completly full and identity matrix).</br></br>
 Create matrix:
