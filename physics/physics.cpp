@@ -15,18 +15,23 @@ physics::physics(vec2 pos, vec2 vel, vec2 accel, std::map<std::string,double> pr
 
 void physics::updateForces(double dt,std::vector<physics> universe){
         totalForces=vec2(0,0); // reset total force vector
+        totalVelocity=vec2(0,0);
+        totalTp=vec2(0,0);
         for(auto &a: forces) totalForces = totalForces + a((*this),universe); // add all the applied forces
         for(auto &a: collisions){
             std::array<vec2,2> col = a((*this),universe);
-            velocity = velocity + col[1]; // add all the acting collisions
-            position = position + col[0]; // add all acting collision offsets
+            totalVelocity = totalVelocity + col[1]; // add all the acting collisions
+            totalTp = totalTp + col[0]; // add all acting collision offsets
         }
     }
 
 void physics::updateStatus(double dt){
         acceleration = totalForces*(1/proprieties["mass"]); // a = F/m
+        if (hasCollided) velocity = totalVelocity;
         velocity = velocity + acceleration*dt; // dv = da*dt   ->  v+dv = v + da*dt
+        position = position + totalTp;
         position = position + velocity*dt; // dx = dv*dt       ->  x+dx = x + dv*dt
+        hasCollided=false;
     }
     
 
@@ -38,7 +43,7 @@ std::vector<vec2 (*)(physics,std::vector<physics>)> physics::getForces(){ return
 
 double physics::getProp(std::string name){return proprieties[name]; }
 void physics::addForce(vec2 (*force)(physics,std::vector<physics>)){ forces.push_back(force); }
-void physics::addCollision(std::array<vec2,2> (*func)(physics,std::vector<physics>)){ collisions.push_back(func); }
+void physics::addCollision(std::array<vec2,2> (*func)(physics&,std::vector<physics>)){ collisions.push_back(func); }
 void physics::addProp(std::string name, double value){ proprieties[name] = value; }
 
 

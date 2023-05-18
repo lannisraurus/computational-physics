@@ -12,12 +12,19 @@
 //this is a structure containing information on a physical, mechanical body.
 class physics{
 private:
+
+    bool hasCollided = false;
+
     vec2 position; // position vector - where is it?
     vec2 velocity; // velocity vector - how fast is it?
     vec2 acceleration; // acceleration vector - how is the velocity changing?
+
     vec2 totalForces; // the sum of all total forces
+    vec2 totalVelocity; // the sum of all collision stuff
+    vec2 totalTp; // the sum of all collision stuff
+
     std::vector<vec2 (*)(physics,std::vector<physics>)> forces; // total forces - what are the operations i have to check each dt?
-    std::vector<std::array<vec2,2> (*)(physics,std::vector<physics>)> collisions; // total acting collision types
+    std::vector<std::array<vec2,2> (*)(physics&,std::vector<physics>)> collisions; // total acting collision types
     std::map<std::string,double> proprieties; // proprieties of the object, the first one ALWAYS being it's mass.
 public:
     physics();
@@ -35,12 +42,13 @@ public:
     double getProp(std::string name);
     //Adders
     void addForce(vec2 (*force)(physics,std::vector<physics>));
-    void addCollision(std::array<vec2,2> (*func)(physics,std::vector<physics>));
+    void addCollision(std::array<vec2,2> (*func)(physics&,std::vector<physics>));
     void addProp(std::string name, double value);
     //Setters
     void teleport(vec2 pos){position=pos;}
     void setMotion(vec2 vel){velocity=vel;}
     void stop(){position=vec2(0,0);velocity=vec2(0,0);acceleration=vec2(0,0);}
+    void collide(){ hasCollided=true; }
     //removers
     void removeForce(vec2 (*force)(physics,std::vector<physics>));
 
