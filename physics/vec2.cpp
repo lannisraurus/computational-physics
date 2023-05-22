@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "vec2.h"
 
 vec2::vec2(){
     x=0;y=0;
