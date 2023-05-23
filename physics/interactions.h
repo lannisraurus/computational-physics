@@ -6,7 +6,9 @@
 #include <array>
 //my libraries
 #include "vec2.h"
+#include "vec3.h"
 #include "object.h"
+//constants
 #define G 6.67E-11
 #define Ke 8.988E9
 

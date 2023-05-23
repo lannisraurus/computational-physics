@@ -4,23 +4,12 @@
 #include <math.h>
 #include <vector>
 #include <map>
+#include <set>
 #include <array>
+#include <SDL2/SDL.h>
 //my libraries
 #include "vec2.h"
-
-
-
-
-// object priprieties
-struct proprieties{
-    double mass;
-    double charge;
-    double spring_eq;
-    double spring_constant;
-    double radius;
-    double viscosity;
-};
-
+#include "vec3.h"
 
 
 
@@ -35,6 +24,7 @@ private:
     vec2 velocity;                              // velocity vector
     vec2 acceleration;                          // acceleration vector
     std::map<std::string,double> proprieties;   // proprieties of the object, the first one ALWAYS being it's mass.
+    std::set<std::string> tags;                 // these are tags - used for classifying objects
 
     // intermidiary quantities
 
@@ -42,9 +32,13 @@ private:
     vec2 posUpdate;    // delayed addition to position
     vec2 velUpdate;    // delayed addition to velocity
 
-    // container quantities
+    // interaction mediatiors
 
     std::vector<void (*)(object&,std::vector<object>&)> interactions;      // applied interaction functions
+
+    // other bodies
+
+    std::vector<object*> innerUniverse;                                    // bodies to interact with
     std::vector<object*> connections;                                      // connected bodies for special interactions
 
 public:
@@ -72,29 +66,27 @@ public:
     vec2 getAcc(){return acceleration; }
     double operator[] (std::string name){ return proprieties[name]; }
     std::vector<object*> getConnections(){ return connections; }
+    std::vector<object*> getUniverse(){ return innerUniverse; }
     
     //Adders
     void addInteraction(void (*func)(object&,std::vector<object>&)){ interactions.push_back(func); }
     void addPropriety(std::string name, double value){ proprieties[name] = value; }
     void addForce(vec2 f){force = force + f;}
+    
+    void addConnection(object* obj){ connections.push_back(obj); }
+    void addBody(object* obj){ innerUniverse.push_back(obj); }
 
     //Setters
     void setPos(vec2 pos){posUpdate=pos;}
     void setVel(vec2 vel){velUpdate=vel;}
+
+    //Representations
+    void draw(SDL_Renderer* ren){
+        SDL_SetRenderDrawColor(ren,(*this)["red"],(*this)["green"],(*this)["blue"],(*this)["alpha"]);
+        SDL_RenderDrawPoint(ren,position.X(),position.Y());
+    }
+    void print(){
+        std::cout << "Object -> Pos( " << position.X() << " , " << position.Y() << " )" << " Vel( " << velocity.X() << " , " << velocity.Y() << " )\n";
+    }
     
 };
-
-
-
-////////////   UNIVERSE FUNCTIONS
-
-
-
-// does both universe updatings in order for the universe
-void updateUniverse(std::vector<object>& universe, double dt){
-    for(int i = 0; i < universe.size(); i++){ universe[i].updateInteractions(dt,universe); }
-    for(int i = 0; i < universe.size(); i++){ universe[i].updateStatus(dt); }
-}
-
-
-
