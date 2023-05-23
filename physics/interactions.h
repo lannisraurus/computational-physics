@@ -88,6 +88,23 @@ vec2 CENTRAL_SPRING_DAMPENED(object &object, std::vector<object> universe){
 
 //////////////////// COLLISIONS //////////////////// 
 
+void BLOCK_COLLISION(object& obj, std::vector<object>& universe){
+    vec2 addPos;
+    vec2 addVel;
+    for(auto &a: universe){
+        vec2 dist = obj.getPos()*(-1)+(a.getPos());
+        if(dist.size()>0){
+            double inside = dist.size()-obj["radius"]-a["radius"];
+            if(inside<0){
+                dist = dist.normalized();
+                addPos = addPos + dist*inside;
+                addVel = addVel + dist*(obj.getVel()*dist)*(-1);
+                obj.setPos(addPos+obj.getPos());
+                obj.setVel(addVel+obj.getVel());
+            }
+        }
+    }
+}
 
 void ELASTIC_COLLISION(object& obj, std::vector<object>& universe){
     vec2 addPos(0,0);

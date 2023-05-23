@@ -24,15 +24,16 @@ int main(){
 
     std::vector<object> universe;
     std::map<std::string,double> prop;
-    prop["mass"] = 1;
-    prop["radius"] = 5;
+    prop["mass"] = 1000000000000;
+    prop["radius"] = 1;
+    vec2 vel;
     for(int i = 0; i < 15; i++) for(int j = 0; j < 15; j++){
-        if(rand()%2) prop["charge"]=0.01; else prop["charge"]=-0.01;
-        universe.push_back(object(vec2(i*50,j*50),vec2(0,0),vec2(0,0),prop));
+        if(rand()%2) vel=vec2(10,0); else vel=vec2(-10,0);
+        universe.push_back(object(vec2(100+i*2,100+j*2),vec2(0,0),vec2(0,0),prop));
     }
 
     for(auto &a: universe) {
-        a.addInteraction(&CENTRAL_ELECTRIC);
+        a.addInteraction(&CENTRAL_GRAVITY);
     }
 
     bool open = true;
