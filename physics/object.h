@@ -83,7 +83,13 @@ public:
     //Representations
     void draw(SDL_Renderer* ren){
         SDL_SetRenderDrawColor(ren,(*this)["red"],(*this)["green"],(*this)["blue"],(*this)["alpha"]);
-        SDL_RenderDrawPoint(ren,position.X(),position.Y());
+        for(int i = -1; i <= 1; i++){
+            for(int j = -1; j <= 1; j++){
+                SDL_RenderDrawPoint(ren,position.X()+i,position.Y()+j);
+            }
+        }
+        
+        
     }
     void print(){
         std::cout << "Object -> Pos( " << position.X() << " , " << position.Y() << " )" << " Vel( " << velocity.X() << " , " << velocity.Y() << " )\n";

@@ -19,17 +19,15 @@ void CENTRAL_GRAVITY(object& obj,std::vector<object>& universe){
 
     for(int i = 0; i < universe.size(); i++){
 
-        vec2 dist = (obj.getPos()*(-1))+universe[i].getPos();
-        if(dist.size() > obj["radius"]+universe[i]["radius"]){
-            double r = dist.size();
+        vec2 dist = universe[i].getPos()-obj.getPos();
+        double r = dist.size();
+        if(r > obj["radius"]+universe[i]["radius"]){
             double m = obj["mass"];
             double M = universe[i]["mass"];
             dist = dist.normalized();
             dist = dist*((G*m*M)/(r*r));
 
             obj.addForce(dist);
-            universe[i].addForce(dist*(-1));
-
         }
     }
 }
@@ -39,46 +37,62 @@ void CENTRAL_ELECTRIC(object& obj,std::vector<object>& universe){
 
     for(int i = 0; i < universe.size(); i++){
 
-        vec2 dist = (obj.getPos()*(-1))+universe[i].getPos();
-        if(dist.size() > obj["radius"]+universe[i]["radius"]){
-            double r = dist.size();
+        vec2 dist = universe[i].getPos()-obj.getPos();
+        double r = dist.size();
+        if(r > obj["radius"]+universe[i]["radius"]){
             double q = obj["charge"];
             double Q = universe[i]["charge"];
             dist = dist.normalized();
             dist = dist*((-1*Ke*q*Q)/(r*r));
 
             obj.addForce(dist);
-            universe[i].addForce(dist*(-1));
 
         }
     }
 }
 
 
-/*
-vec2 CENTRAL_ANTI_GRAVITY(object &object,std::vector<object> universe){
-    return CENTRAL_GRAVITY(&object,universe)*(-1);
+
+void CENTRAL_ANTI_GRAVITY(object& obj,std::vector<object>& universe){
+    for(int i = 0; i < universe.size(); i++){
+
+        vec2 dist = universe[i].getPos()-obj.getPos();
+        double r = dist.size();
+        if(r > obj["radius"]+universe[i]["radius"]){
+            double m = obj["mass"];
+            double M = universe[i]["mass"];
+            dist = dist.normalized();
+            dist = dist*((G*m*M)/(r*r));
+
+            obj.addForce(dist*(-1));
+        }
+    }
 }
 
 
-vec2 VISCOSITY(object &object, std::vector<object> universe){
-    return object.getVel()*(&object).getProp("viscosity")*(-1);
+
+void VISCOSITY(object& obj,std::vector<object>& universe){
+    obj.addForce(obj.getVel()*obj["viscosity"]*(-1));
 }
 
-vec2 CENTRAL_SPRING(object &object, std::vector<object> universe){
+
+
+void CENTRAL_SPRING(object& obj,std::vector<object>& universe){
     vec2 total;
     for(auto &a: universe){
-        vec2 dist = (object.getPos()*(-1))+a.getPos();
-        if(dist.size()>0){
-            double size = (dist.size()-object.getProp("spring_eq"))*object.getProp("spring_constant");
+        vec2 dist = a.getPos()-obj.getPos();
+        double r = dist.size(); 
+        if(r>0){
+            double size = (r-obj["spring_eq"])*obj["spring_constant"];
             dist = dist.normalized();
             dist = dist*size;
             total=total+dist;
         }
     }
-    return total;
+    obj.addForce(total);
 }
 
+/*
 
 vec2 CENTRAL_SPRING_DAMPENED(object &object, std::vector<object> universe){
     vec2 v1 = CENTRAL_SPRING(&object,universe);
@@ -94,13 +108,13 @@ void BLOCK_COLLISION(object& obj, std::vector<object>& universe){
     vec2 addPos;
     vec2 addVel;
     for(auto &a: universe){
-        vec2 dist = obj.getPos()*(-1)+(a.getPos());
+        vec2 dist = a.getPos()-obj.getPos();
         if(dist.size()>0){
             double inside = dist.size()-obj["radius"]-a["radius"];
             if(inside<0){
                 dist = dist.normalized();
                 addPos = addPos + dist*inside;
-                addVel = addVel + dist*(obj.getVel()*dist)*(-1);
+                addVel = addVel - dist*(obj.getVel()*dist);
                 obj.setPos(addPos+obj.getPos());
                 obj.setVel(addVel+obj.getVel());
             }
@@ -112,7 +126,7 @@ void ELASTIC_COLLISION(object& obj, std::vector<object>& universe){
     vec2 addPos(0,0);
     vec2 addVel(0,0);
     for(auto &a: universe){
-        vec2 dist = obj.getPos()*(-1)+(a.getPos());
+        vec2 dist = a.getPos()-obj.getPos();
         if(dist.size()>0){
             double inside = dist.size()-obj["radius"]-a["radius"];
             if(inside<0){
@@ -127,7 +141,7 @@ void ELASTIC_COLLISION(object& obj, std::vector<object>& universe){
 
                 double vf = (2*m1*v1+(m2-m1)*v2)/(m1+m2);
 
-                addVel = addVel + dist*vf + dist*(v2)*(-1);
+                addVel = addVel + dist*vf - dist*(v2);
 
                 obj.setPos(addPos+obj.getPos());
                 obj.setVel(addVel+obj.getVel());

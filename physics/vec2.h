@@ -12,19 +12,21 @@ public:
     //initialization
     vec2(double X, double Y): x(X), y(Y) {}
     //dot product
-    double operator*(const vec2 v){ return x*v.x + y*v.y; } // (a,b)*(c,d) = a*c+b*d
+    double operator*(const vec2& v){ return x*v.x + y*v.y; } // (a,b)*(c,d) = a*c+b*d
     //size
     double size(){ return sqrt((*this)*(*this)); } // (1,1).size() = sqrt(2)
     //scale
-    vec2 operator*(double k){ double rx = x*k ; double ry = y*k; return vec2(rx,ry); } // k(x,y) = (kx,ky)
+    vec2 operator*(const double& k){ double rx = x*k ; double ry = y*k; return vec2(rx,ry); } // k(x,y) = (kx,ky)
     //add vectors
-    vec2 operator+(const vec2 v){ return vec2(x+v.x,y+v.y); } // (a,b)+(c,d) = (a+c,b+d)
+    vec2 operator+(const vec2& v){ return vec2(x+v.x,y+v.y); } // (a,b)+(c,d) = (a+c,b+d)
+    // subtract vectors
+    vec2 operator-(const vec2& v){ return vec2(x-v.x,y-v.y); } // (a,b)+(c,d) = (a+c,b+d)
     //normalize vector
-    vec2 normalized(){ double k = (*this).size(); return vec2(x/k,y/k); } // vector becomes normalized (size = 1)
+    vec2 normalized(){ double k = size(); return vec2(x/k,y/k); } // vector becomes normalized (size = 1)
     //print
     void print(){ std::cout << "( " << x << " , " << y << " )\n";}
     //return
-    double X(){return x;}
-    double Y(){return y;}
+    double X() const {return x;}
+    double Y() const {return y;}
 
 };

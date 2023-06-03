@@ -20,26 +20,26 @@ int main(){
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) printf("SDL ERROR: %s\n", SDL_GetError());
 
     // Program Variables
-    program p;
-    initializeProgram(p);
+    program program;
+    initializeProgram(program);
 
     // Program Loop
-    while(p.isOpen){
+    while(program.isOpen){
 
         //events
-        handleEvents(p);
+        handleEvents(program);
         //physics
-        handlePhysics(p);
+        handlePhysics(program);
         //graphics
-        handleDisplay(p);
+        handleDisplay(program);
         //time
-		handleTime(p);
+		handleTime(program);
 
     }
 
-    // Close the Program
-    SDL_DestroyRenderer(p.renderer);
-    SDL_DestroyWindow(p.window);
+    // Close the ProgramPoint2D operator=(const Point2D& p);
+    SDL_DestroyRenderer(program.renderer);
+    SDL_DestroyWindow(program.window);
     return 0;
 
 }
