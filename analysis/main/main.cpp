@@ -59,6 +59,6 @@ int main(){
     for(int i = 1; i < N; i++) histograms[i]->Draw("same");
     canvas->Modified();
     canvas->Update();
-    canvas->SaveAs("random walk.png","png");
+    canvas->SaveAs("random_walk.png","png");
 
 }

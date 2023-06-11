@@ -58,7 +58,7 @@ int main(){
     h2.Draw("colz");
     c.Modified();
     c.Update();
-    c.SaveAs("incident power.png","png");
+    c.SaveAs("incident_power.png","png");
     c.Clear();
 
     
@@ -81,7 +81,7 @@ int main(){
     graph.Draw("AL");
     c.Modified();
     c.Update();
-    c.SaveAs("power vs distance.png","png");
+    c.SaveAs("power_vs_distance.png","png");
     c.Clear();
 
 
@@ -125,7 +125,7 @@ int main(){
 
     c.Modified();
     c.Update();
-    c.SaveAs("power vs distance large.png","png");
+    c.SaveAs("power_vs_distance_large.png","png");
     c.Clear();
 
     // CONTOUR LINES - ANALYTICAL
@@ -159,7 +159,7 @@ int main(){
     }
     c.Modified();
     c.Update();
-    c.SaveAs("incident power level curves.png","png");
+    c.SaveAs("incident_power_level_curves.png","png");
     c.Clear();
 
 
