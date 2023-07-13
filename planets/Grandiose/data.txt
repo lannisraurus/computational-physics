@@ -1,0 +1,2 @@
+Average Effective Temperature: 249.181 [K]
+Average Orbital Speed: 28662.7 [ms^-1]
