@@ -1,1 +1,1 @@
-![example](example.png)
+![example](graphs.jpg)
