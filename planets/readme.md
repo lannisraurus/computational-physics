@@ -1,1 +1,1 @@
-![example](example.pdf)
+![example](example.png)
