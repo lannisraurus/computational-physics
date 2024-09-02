@@ -59,7 +59,7 @@ int main(){
     h2.Draw("colz");
     c.Modified();
     c.Update();
-    c.SaveAs("proj2/FIG_LightMap_power.pdf","pdf");
+    c.SaveAs("proj2/FIG_LightMap_power.png","png");
     c.Clear();
 
 
@@ -81,7 +81,7 @@ int main(){
     graph.Draw("AL*");
     c.Modified();
     c.Update();
-    c.SaveAs("proj2/FIG_LightMap_totalpower.pdf","pdf");
+    c.SaveAs("proj2/FIG_LightMap_totalpower.png","png");
 
     cout << "\n";
  
